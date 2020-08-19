@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: '/hexschool-jsClass/week6/dist/'
+  publicPath: '/hexschool-jsweek7/week7/dist/'
 }
