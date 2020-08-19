@@ -42,15 +42,11 @@
           <div class="card-footer d-flex">
             <button type="button" class="btn btn-outline-secondary btn-sm"
               @click="getDetailed(item.id)">
-              <i
-                v-if="status.loadingItem === item.id"
-                class="spinner-grow spinner-grow-sm"
-              />
               查看更多
             </button>
             <button type="button" class="btn btn-outline-danger btn-sm ml-auto"
             @click="addCart(item)">
-              <!-- <i v-if="status.loadingItem === item.id" class="spinner-grow spinner-grow-sm"></i> -->
+              <i v-if="status.loadingItem === item.id" class="spinner-grow spinner-grow-sm"></i>
               加到購物車
             </button>
           </div>
@@ -156,7 +152,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              @click="addtoCart(tempProduct, tempProduct.num)"
+              @click="addCart(tempProduct, tempProduct.num)"
             >
               <i
                 v-if="tempProduct.id === status.loadingItem"
@@ -397,7 +393,7 @@ export default {
     },
     // 加入購物車
     addCart (item, quantity = 1) {
-      this.isLoading = true
+      this.status.loadingItem = item.id
       // api必要欄位
       const cart = {
         product: item.id,
@@ -405,13 +401,24 @@ export default {
       }
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`
       this.$http.post(url, cart).then((response) => {
-        this.isLoading = false
+        this.status.loadingItem = ''
+        this.$bus.$emit('message:push',
+          '加入購物車成功囉，好棒ヽ(＾Д＾)ﾉ ',
+          'success')
         this.cartTotal = 0
         this.cartQuantity = 0
         this.getCart()
-      }).catch(() => {
-        this.isLoading = false
-        alert('商品已加入購物車')
+        $('#productModal').modal('hide')
+      }).catch((error) => {
+        this.status.loadingItem = ''
+        const errorList = error.response.data.errors
+        errorList.forEach((err) => {
+          this.$bus.$emit('message:push',
+          `加入失敗惹，好糗Σ( ° △ °|||)︴
+          ${err}`,
+          'danger')
+        })
+        $('#productModal').modal('hide')
       })
     },
     // 數量加減按鈕
@@ -484,6 +491,7 @@ export default {
         this.isLoading = false
       })
     },
+    // 查詢優惠卷
     addCoupon () {
       this.isLoading = true
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/coupon/search`
@@ -511,6 +519,7 @@ export default {
         }
       })
     },
+    // 取得產品明細
     getDetailed (id) {
       this.isLoading = true
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/product/${id}`
