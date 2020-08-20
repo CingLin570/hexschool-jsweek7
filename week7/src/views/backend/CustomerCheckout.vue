@@ -1,5 +1,5 @@
 <template>
-    <div class="my-5 row no-gutters justify-content-center">
+  <div class="my-5 row no-gutters justify-content-center">
     <Loading :active.sync="isLoading" />
 
     <div class="col-md-10">
@@ -15,42 +15,21 @@
           </tr>
         </thead>
         <tbody v-if="orders.length">
-          <tr
-            v-for="(item, key) in orders"
-            :key="key"
-            :class="{'text-secondary': !item.is_paid}"
-          >
+          <tr v-for="(item, key) in orders" :key="key" :class="{'text-secondary': !item.is_paid}">
             <td>{{ item.created.datetime }}</td>
-            <td>
-              {{ item.payment }}
-            </td>
+            <td>{{ item.payment }}</td>
             <td>
               <ul class="list-unstyled">
-                <li
-                  v-for="(product, i) in item.products"
-                  :key="i"
-                >
+                <li v-for="(product, i) in item.products" :key="i">
                   {{ product.product.title }} 數量：{{ product.quantity }}
                   {{ product.product.unit }}
                 </li>
               </ul>
             </td>
-            <td class="text-right">
-              {{ item.amount }}
-            </td>
+            <td class="text-right">{{ item.amount }}</td>
             <td>
-              <strong
-                v-if="item.paid"
-                class="text-success"
-              >
-                已付款
-              </strong>
-              <span
-                v-else
-                class="text-muted"
-              >
-                未付款
-              </span>
+              <strong v-if="item.paid" class="text-success">已付款</strong>
+              <span v-else class="text-muted">未付款</span>
             </td>
             <td>
               <div class="btn-group btn-group-sm">
@@ -58,22 +37,17 @@
                   class="btn btn-outline-primary"
                   :disabled="item.paid"
                   @click.prevent="getDetailed(item.id)"
-                >
-                  選擇
-                </button>
+                >選擇</button>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
-      <Pagination :pages="pagination" @emitPages="getOrders"/>
+      <Pagination :pages="pagination" @emitPages="getOrders" />
     </div>
-    <hr class="w-100">
+    <hr class="w-100" />
 
-    <form
-      class="col-md-6"
-      @submit.prevent="payOrder"
-    >
+    <form class="col-md-6" @submit.prevent="payOrder">
       <table class="table">
         <thead>
           <th>品名</th>
@@ -81,32 +55,16 @@
           <th>單價</th>
         </thead>
         <tbody>
-          <tr
-            v-for="(item, key) in order.products"
-            :key="key"
-          >
-            <td class="align-middle">
-              {{ item.product.title }}
-            </td>
-            <td class="align-middle">
-              {{ item.quantity }}/{{ item.product.unit }}
-            </td>
-            <td class="align-middle text-right">
-              {{ item.product.price | total }}
-            </td>
+          <tr v-for="(item, key) in order.products" :key="key">
+            <td class="align-middle">{{ item.product.title }}</td>
+            <td class="align-middle">{{ item.quantity }}/{{ item.product.unit }}</td>
+            <td class="align-middle text-right">{{ item.product.price | total }}</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <td
-              colspan="2"
-              class="text-right"
-            >
-              總計
-            </td>
-            <td class="text-right" v-if="order.amount">
-              {{ parseInt(order.amount)  | total }}
-            </td>
+            <td colspan="2" class="text-right">總計</td>
+            <td class="text-right" v-if="order.amount">{{ parseInt(order.amount) | total }}</td>
           </tr>
         </tfoot>
       </table>
@@ -114,9 +72,7 @@
       <table class="table">
         <tbody>
           <tr>
-            <th width="100">
-              Email
-            </th>
+            <th width="100">Email</th>
             <td>{{ order.user.email }}</td>
           </tr>
           <tr>
@@ -135,21 +91,13 @@
             <th>付款狀態</th>
             <td>
               <span v-if="!order.paid">尚未付款</span>
-              <span
-                v-else
-                class="text-success"
-              >付款完成</span>
+              <span v-else class="text-success">付款完成</span>
             </td>
           </tr>
         </tbody>
       </table>
-      <div
-        v-if="order.paid === false"
-        class="text-right"
-      >
-        <button class="btn btn-danger">
-          確認付款去
-        </button>
+      <div v-if="order.paid === false" class="text-right">
+        <button class="btn btn-danger">確認付款去</button>
       </div>
     </form>
   </div>

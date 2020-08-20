@@ -4,7 +4,7 @@
   <a class="navbar-brand font-style m-0 px-4" href="#" @click.prevent="goHome">S protein</a>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#" @click.prevent="signOut">登出</a>
+      <a class="btn btn-outline-light" href="#" @click.prevent="signOut">登出</a>
     </li>
   </ul>
 </nav>
