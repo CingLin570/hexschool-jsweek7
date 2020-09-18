@@ -38,6 +38,21 @@ const routes = [
         path: '/cart',
         name: '前台購物車',
         component: () => import('../views/frontend/Cart.vue')
+      },
+      {
+        path: '/checkoutorder',
+        name: '前台客戶訂單',
+        component: () => import('../views/frontend/CheckoutOrder.vue')
+      },
+      {
+        path: '/orderfinish/:orderid',
+        name: '前台填寫訂單資訊',
+        component: () => import('../views/frontend/OrderFinish.vue')
+      },
+      {
+        path: '/ordersuccess',
+        name: '前台訂單完成',
+        component: () => import('../views/frontend/OrderSuccess.vue')
       }
     ]
   },

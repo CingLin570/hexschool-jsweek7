@@ -1,0 +1,32 @@
+//全域
+body {
+    font-size: 1rem;
+}
+a:hover{
+    text-decoration:none;
+}
+//字體
+.font-style{
+    font-family: 'Lemon', cursive;
+}
+.line-height-lg{
+    line-height: 1.5;
+}
+.font-xs{
+    font-size: 24px;
+}
+@media (min-width: 576px) {
+    .font-xs{
+    font-size: 32px;
+    }
+}
+.z-index{
+    z-index: 1000;
+}
+.my-200{
+    margin-top: 200px;
+    margin-bottom: 200px;
+}
+.padding-xl{
+    padding-top: 200px;
+}

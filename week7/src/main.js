@@ -9,8 +9,13 @@ import {
 import * as rules from 'vee-validate/dist/rules' // 規則檔案（ex: email...）
 import zhTW from 'vee-validate/dist/locale/zh_TW.json' // 語系檔案
 import Loading from 'vue-loading-overlay'
-import './bus'
 import 'vue-loading-overlay/dist/vue-loading.css'
+import StepProgress from 'vue-step-progress'
+import 'vue-step-progress/dist/main.css'
+import './bus'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import BackToTop from 'vue-backtotop'
+import 'swiper/css/swiper.css'
 import App from './App.vue'
 import router from './router'
 // 套件加入 Vue 的藍圖(原型內)
@@ -28,16 +33,29 @@ configure({
 localize('tw', zhTW)
 Vue.component('ValidationObserver', ValidationObserver)
 Vue.component('ValidationProvider', ValidationProvider)
-
-Vue.use(VueAxios, axios)
-Vue.config.productionTip = false
+// 購物車訂單程序
+Vue.component('step-progress', StepProgress)
 // 元件全域註冊
 Vue.component('Loading', Loading)
+Vue.use(BackToTop)
+Vue.use(VueAwesomeSwiper)
+Vue.use(VueAxios, axios)
+Vue.use(Loading, {
+  canCancel: false,
+  color: '#5CA8CA',
+  loader: 'dots',
+  width: 100,
+  height: 100,
+  backgroundColor: '#ffffff',
+  isFullPage: true,
+  opacity: 0.8
+})
+Vue.config.productionTip = false
 
 Vue.filter('total', function (num) {
   const parts = num.toString().split('.')
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  return '$' + parts.join('.')
+  return 'NT$' + parts.join('.')
 })
 Vue.filter('percent', function (num) {
   return num + '%'

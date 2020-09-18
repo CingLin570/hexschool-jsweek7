@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <loading :active.sync="isLoading"></loading>
-  <a class="navbar-brand font-style m-0 px-4" href="#" @click.prevent="goHome">S protein</a>
+  <a class="navbar-brand fonts m-0 px-4" href="#" @click.prevent="goHome">S protein</a>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
       <a class="btn btn-outline-light" href="#" @click.prevent="signOut">登出</a>
@@ -44,7 +44,8 @@ export default {
 </script>
 
 <style>
-  .font-style{
+  .fonts{
     font-family: 'Lemon', cursive;
+    font-size: 20px;
   }
 </style>
